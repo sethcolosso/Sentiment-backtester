@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 
 SHILLER_URL = "http://www.econ.yale.edu/~shiller/data/ie_data.xls"
 
-# === FETCH FUNCTIONS ===
+# === FETCHS FUNCTIONS ===
 def fetch_price(ticker, start, end=None):
     end = end or datetime.today().strftime('%Y-%m-%d')
     for _ in range(3):
@@ -82,7 +82,8 @@ def fetch_yield_curve(start, end=None):
     except:
         return pd.Series(0.5, index=pd.date_range(start=start, end=end, freq='D'))
 
-# === SIGNAL & BACKTEST ===
+# === SIGNALS & BACKTESTING ===
+
 def generate_signal(pe, vix, yc, rsi):
     score = 0
     if pe < 30: score += 1
@@ -174,5 +175,4 @@ def run_backtest(ticker, start, end=None):
         'latest_pe': df['PE'].iloc[-1],
         'latest_rsi': df['RSI'].iloc[-1]
     }
-
     return df, metrics
